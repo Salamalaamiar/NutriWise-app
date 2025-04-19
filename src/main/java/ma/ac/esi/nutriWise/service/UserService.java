@@ -9,6 +9,11 @@ public class UserService {
     public UserService() {
         this.userRepository = new UserRepository();
     }
+    
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 
     public boolean findUserByCredentials(String login, String password) {
         
