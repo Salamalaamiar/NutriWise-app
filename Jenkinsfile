@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Compiling the code...'
                 // Example compile command:
-                sh 'mvn compile'
+                bat 'mvn compile'
             }
         }
 
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Running tests...'
                 // Example test command:
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
     }
