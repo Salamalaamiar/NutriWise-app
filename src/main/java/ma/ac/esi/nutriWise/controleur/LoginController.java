@@ -20,10 +20,21 @@ public class LoginController extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	
+	private UserService userService;
+
     public LoginController() {
         super();
-        // TODO Auto-generated constructor stub
+        this.userService = new UserService(); // Initialisation par défaut
     }
+
+    // Méthode pour les tests (injection de mock)
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    // Pour les tests (injection de mock)
+   
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,7 +47,7 @@ public class LoginController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String login=request.getParameter("uname");
 		String password =request.getParameter("psw");
