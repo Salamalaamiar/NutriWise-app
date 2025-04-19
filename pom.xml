@@ -8,6 +8,8 @@
   <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
    <dependencies>
    
+  
+
     
     <dependency> 
 <groupId>jakarta.servlet</groupId> 
@@ -36,6 +38,7 @@
         <targetJdk>17</targetJdk> <!-- adapte selon ton JDK -->
         <printFailingErrors>true</printFailingErrors>
         <failOnViolation>true</failOnViolation>
+        
       </configuration>
       <executions>
         <execution>
@@ -112,7 +115,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
         <configuration>
-          <release>21</release>
+          <release>17</release>
         </configuration>
       </plugin>
       <plugin>

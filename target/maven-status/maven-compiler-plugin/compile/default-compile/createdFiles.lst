@@ -1,0 +1,16 @@
+ma\ac\esi\nutriWise\service\MealService.class
+ma\ac\esi\nutriWise\controleur\MealController.class
+ma\ac\esi\nutriWise\model\Meal.class
+ma\ac\esi\nutriWise\controleur\IngredientController.class
+ma\ac\esi\nutriWise\service\IngredientService.class
+ma\ac\esi\nutriWise\controleur\EditIngredientController.class
+ma\ac\esi\nutriWise\util\DBUtil.class
+ma\ac\esi\nutriWise\repository\UserRepository.class
+ma\ac\esi\nutriWise\repository\IngredientRepository.class
+ma\ac\esi\nutriWise\repository\MealRepository.class
+ma\ac\esi\nutriWise\controleur\LogoutController.class
+ma\ac\esi\nutriWise\controleur\DeleteIngredientController.class
+ma\ac\esi\nutriWise\model\User.class
+ma\ac\esi\nutriWise\controleur\LoginController.class
+ma\ac\esi\nutriWise\model\Ingredient.class
+ma\ac\esi\nutriWise\service\UserService.class

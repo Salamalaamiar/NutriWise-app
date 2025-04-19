@@ -1,16 +1,16 @@
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\controleur\DeleteIngredientController.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\controleur\EditIngredientController.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\controleur\IngredientController.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\controleur\LoginController.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\controleur\LogoutController.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\controleur\MealController.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\model\Ingredient.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\model\Meal.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\model\User.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\repository\IngredientRepository.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\repository\MealRepository.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\repository\UserRepository.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\service\IngredientService.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\service\MealService.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\service\UserService.java
-C:\Users\HP\Desktop\JAVA N TIERS\Workspace\NutriWise\src\main\java\ma\ac\esi\nutriWise\util\DBUtil.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\controleur\DeleteIngredientController.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\controleur\EditIngredientController.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\controleur\IngredientController.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\controleur\LoginController.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\controleur\LogoutController.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\controleur\MealController.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\model\Ingredient.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\model\Meal.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\model\User.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\repository\IngredientRepository.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\repository\MealRepository.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\repository\UserRepository.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\service\IngredientService.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\service\MealService.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\service\UserService.java
+C:\Users\hp\Desktop\2A\S4\Software_Engineering\Projet\projectFolder\NutriWise-app\src\main\java\ma\ac\esi\nutriWise\util\DBUtil.java
