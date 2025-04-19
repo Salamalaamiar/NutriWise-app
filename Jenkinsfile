@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+     triggers {
+        githubPush() // This makes Jenkins respond to GitHub webhook pushes
+    }
+    
     stages {
         stage('Checkout') {
             steps {
