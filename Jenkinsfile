@@ -50,13 +50,6 @@ pipeline {
             }
         }
 
-        stage('Documentation') {
-            steps {
-                echo 'Generating JavaDoc documentation...'
-                bat 'mvn site'
-            }
-        }
-
         stage('Packaging') {
             steps {
                 echo 'Packaging the project...'
@@ -73,19 +66,7 @@ pipeline {
                         bat 'mvn deploy'
                     }
                 }
-                // Docker (optional, uncomment if needed)
-                /*
-                stage('Docker Image') {
-                    steps {
-                        script {
-                            docker.build("ecommerce-image", ".")
-                            docker.withRegistry('https://your-registry', 'docker-creds') {
-                                docker.image("ecommerce-image").push()
-                            }
-                        }
-                    }
-                }
-                */
+               
             }
         }
 
@@ -101,12 +82,7 @@ pipeline {
             cleanWs()
         }
         success {
-            echo 'Build succeeded! Sending HTML report.'
-            publishHTML(target: [
-                reportName: 'Project Documentation',
-                reportDir: 'target/site',
-                reportFiles: 'index.html'
-            ])
+            echo 'Build succeeded!'
             emailext (
                 to: "${env.RECIPIENT}",
                 subject: "SUCCESS Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
