@@ -1,6 +1,10 @@
 pipeline {
     agent none
 
+    environment {
+        RECIPIENT = 'elharidioumaima@gmail.com'
+    }
+
     stages {
         stage('Build') {
             agent { label 'test-node' }
@@ -42,14 +46,28 @@ pipeline {
             }
         }
 
-        // 🔧 Debug stage to test email
         stage('Force Email') {
             agent { label 'test-node' }
             steps {
                 emailext(
                     subject: "Debug Email",
                     body: "Just testing if this email sends from a stage!",
-                    to: 'elharidioumaima@gmail.com'
+                    to: "${env.RECIPIENT}"
+                )
+            }
+        }
+
+        stage('Notify on Failure') {
+            agent { label 'test-node' }
+            when {
+                expression { currentBuild.currentResult == 'FAILURE' }
+            }
+            steps {
+                echo 'Sending failure email...'
+                emailext(
+                    subject: "Jenkins Build Failure: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                    body: "Build failed. Check the build logs for details.",
+                    to: "${env.RECIPIENT}"
                 )
             }
         }
@@ -63,17 +81,6 @@ pipeline {
                 reportDir: 'target/site',
                 reportFiles: 'index.html'
             ])
-        }
-
-        failure {
-            echo 'Build failed!'
-            node('test-node') {
-                emailext(
-                    subject: "Jenkins Build Failure: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                    body: "Build failed. Check the build logs for details.",
-                    to: 'elharidioumaima@gmail.com'
-                )
-            }
         }
     }
 }
