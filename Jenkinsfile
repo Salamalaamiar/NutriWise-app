@@ -1,31 +1,22 @@
 pipeline {
     agent any
 
-     triggers {
-        githubPush() // This makes Jenkins respond to GitHub webhook pushes
+    tools {
+        maven 'Maven 3.9.9'
+         jdk 'jdk-17.0.12'
     }
-    
+
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                git credentialsId: 'tokengithub', url: 'https://github.com/Salamalaamiar/NutriWise-app.git', branch: 'main'
+                bat 'mvn install'
             }
         }
+    }
 
-        stage('Compile') {
-            steps {
-                echo 'Compiling the code...'
-                // Example compile command:
-                bat 'mvn compile'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                // Example test command:
-                bat 'mvn test'
-            }
+    post {
+        success {
+            junit 'target/surefire-reports/**/*.xml'
         }
     }
 }
