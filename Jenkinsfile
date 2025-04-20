@@ -60,13 +60,18 @@ pipeline {
         }
 
         // If the build fails, send an email notification
-        failure {
-            echo 'Build failed!'
+        post {
+    failure {
+        echo 'Build failed!'
+        node {
             emailext(
                 subject: "Jenkins Build Failure: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build failed. Check the build logs for details.",
-                to: 'elharidioumaima@gmail.com' // Replace with the admin's email
+                to: 'elharidioumaima@gmail.com'
             )
         }
+    }
+}
+
     }
 }
