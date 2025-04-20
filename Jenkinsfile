@@ -1,77 +1,157 @@
 pipeline {
-    agent none
+    agent any
+
+    tools {
+        maven 'maven'
+        jdk 'JDK'
+    }
 
     environment {
         RECIPIENT = 'elharidioumaima@gmail.com'
     }
 
     stages {
-        stage('Build') {
-            agent { label 'test-node' }
+        stage('Start') {
             steps {
-                echo 'Building the project...'
-                bat 'mvn clean install'
+                echo ' Démarrage du pipeline CI/CD'
             }
         }
 
-        stage('Unit Tests') {
-            agent { label 'test-node' }
+        stage('ScrutationSCM') {
             steps {
-                echo 'Running unit tests...'
-                bat 'mvn test'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Construction du projet...'
+                bat 'mvn clean install'
+            }
+            post {
+                success {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('Test') {
+            parallel {
+                stage('JUnit') {
+                    steps {
+                        echo 'Tests unitaires JUnit exécutés'
+                    }
+                }
+                
+            }
+        }
+
+        stage('Analyse du code') {
+            parallel {
+                stage('PMD') {
+                    steps {
+                        bat 'mvn pmd:pmd'
+                    }
+                }
+                stage('Checkstyle') {
+                    steps {
+                        bat 'mvn checkstyle:checkstyle'
+                    }
+                }
             }
         }
 
         stage('Code Coverage') {
-            agent { label 'coverage-node' }
             steps {
-                echo 'Running code coverage...'
+                echo '📊 Rapport de couverture de code...'
                 bat 'mvn jacoco:report'
             }
         }
 
-        stage('Generate Documentation') {
-            agent { label 'doc-node' }
+        stage('Documentation') {
             steps {
-                echo 'Generating project documentation...'
+                echo '📚 Génération de la documentation JavaDoc...'
                 bat 'mvn site'
             }
         }
 
-        stage('Package') {
-            agent { label 'test-node' }
+        stage('Packaging') {
             steps {
-                echo 'Packaging the project...'
+                echo '📦 Packaging du projet...'
                 bat 'mvn package'
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
 
-        
-
-        stage('Notify on Failure') {
-            agent { label 'test-node' }
-            when {
-                expression { currentBuild.result == 'FAILURE' }
+        stage('Déploiement') {
+            parallel {
+                stage('Nexus') {
+                    steps {
+                        echo '📤 Déploiement sur Nexus...'
+                        bat 'mvn deploy'
+                    }
+                }
+                // Docker (optionnel, décommenter si nécessaire)
+                /*
+                stage('Docker Image') {
+                    steps {
+                        script {
+                            docker.build("ecommerce-image", ".")
+                            docker.withRegistry('https://your-registry', 'docker-creds') {
+                                docker.image("ecommerce-image").push()
+                            }
+                        }
+                    }
+                }
+                */
             }
+        }
+
+        stage('End') {
             steps {
-                echo 'Sending failure email...'
-                emailext(
-                    subject: "Jenkins Build Failure: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                    body: "Build failed. Check the build logs for details.",
-                    to: "${env.RECIPIENT}"
-                )
+                echo '✅ Pipeline terminé avec succès !'
             }
         }
     }
 
     post {
+        always {
+            cleanWs()
+        }
         success {
-            echo 'Build succeeded!'
+            echo '🎉 Build réussi ! Envoi du rapport HTML.'
             publishHTML(target: [
-                reportName: 'Project Documentation',
+                reportName: 'Documentation du projet',
                 reportDir: 'target/site',
                 reportFiles: 'index.html'
             ])
+            emailext (
+                to: "${env.RECIPIENT}",
+                subject: "✅ Succès Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """Le pipeline s'est terminé avec succès.
+
+- 📁 Job : ${env.JOB_NAME}
+- 🔢 Build : #${env.BUILD_NUMBER}
+- 🔗 URL : ${env.BUILD_URL}
+"""
+            )
+        }
+        failure {
+            echo '❌ Build échoué. Envoi du mail de notification.'
+            emailext (
+                to: "${env.RECIPIENT}",
+                subject: "❌ ÉCHEC Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """Le pipeline a échoué.
+
+- 📁 Job : ${env.JOB_NAME}
+- 🔢 Build : #${env.BUILD_NUMBER}
+- 🧾 Étape : ${currentBuild.currentResult}
+- 🔗 URL : ${env.BUILD_URL}
+
+Veuillez vérifier les logs pour plus d'informations.
+""",
+                attachLog: true
+            )
         }
     }
 }
