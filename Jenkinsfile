@@ -1,10 +1,7 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'maven'
-        jdk 'JDK'
-    }
+   
 
     environment {
         RECIPIENT = 'elharidioumaima@gmail.com'
