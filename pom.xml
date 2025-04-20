@@ -47,6 +47,27 @@
     <plugins>
 
 <plugin>
+
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-checkstyle-plugin</artifactId>
+    <version>3.3.1</version> <!-- Tu peux utiliser la dernière version -->
+    <executions>
+        <execution>
+            <id>checkstyle</id>
+            <phase>verify</phase>
+            <goals>
+                <goal>checkstyle</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <configLocation>google_checks.xml</configLocation> <!-- ou sun_checks.xml ou un fichier custom -->
+        <failOnViolation>true</failOnViolation>
+        <linkXRef>false</linkXRef>
+    </configuration>
+</plugin>
+  
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-pmd-plugin</artifactId>
       <version>3.20.0</version>
