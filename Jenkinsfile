@@ -46,21 +46,12 @@ pipeline {
             }
         }
 
-        stage('Force Email') {
-            agent { label 'test-node' }
-            steps {
-                emailext(
-                    subject: "Debug Email",
-                    body: "Just testing if this email sends from a stage!",
-                    to: "${env.RECIPIENT}"
-                )
-            }
-        }
+        
 
         stage('Notify on Failure') {
             agent { label 'test-node' }
             when {
-                expression { currentBuild.currentResult == 'FAILURE' }
+                expression { currentBuild.result == 'FAILURE' }
             }
             steps {
                 echo 'Sending failure email...'
