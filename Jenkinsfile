@@ -60,21 +60,21 @@ pipeline {
 
         stage('Code Coverage') {
             steps {
-                echo '📊 Rapport de couverture de code...'
+                echo ' Rapport de couverture de code...'
                 bat 'mvn jacoco:report'
             }
         }
 
         stage('Documentation') {
             steps {
-                echo '📚 Génération de la documentation JavaDoc...'
+                echo ' Génération de la documentation JavaDoc...'
                 bat 'mvn site'
             }
         }
 
         stage('Packaging') {
             steps {
-                echo '📦 Packaging du projet...'
+                echo ' Packaging du projet...'
                 bat 'mvn package'
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
@@ -84,7 +84,7 @@ pipeline {
             parallel {
                 stage('Nexus') {
                     steps {
-                        echo '📤 Déploiement sur Nexus...'
+                        echo ' Déploiement sur Nexus...'
                         bat 'mvn deploy'
                     }
                 }
@@ -106,7 +106,7 @@ pipeline {
 
         stage('End') {
             steps {
-                echo '✅ Pipeline terminé avec succès !'
+                echo 'Pipeline terminé avec succès !'
             }
         }
     }
