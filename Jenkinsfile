@@ -1,28 +1,15 @@
 pipeline {
     agent any
 
-   
-
     environment {
         RECIPIENT = 'elharidioumaima@gmail.com'
     }
 
-    stages {
-        stage('Start') {
-            steps {
-                echo ' Démarrage du pipeline CI/CD'
-            }
-        }
-
-        stage('ScrutationSCM') {
-            steps {
-                checkout scm
-            }
-        }
+   
 
         stage('Build') {
             steps {
-                echo 'Construction du projet...'
+                echo 'Building the project...'
                 bat 'mvn clean install'
             }
             post {
@@ -36,14 +23,13 @@ pipeline {
             parallel {
                 stage('JUnit') {
                     steps {
-                        echo 'Tests unitaires JUnit exécutés'
+                        echo 'JUnit unit tests executed'
                     }
                 }
-                
             }
         }
 
-        stage('Analyse du code') {
+        stage('Code Analysis') {
             parallel {
                 stage('PMD') {
                     steps {
@@ -60,35 +46,35 @@ pipeline {
 
         stage('Code Coverage') {
             steps {
-                echo ' Rapport de couverture de code...'
+                echo 'Generating code coverage report...'
                 bat 'mvn jacoco:report'
             }
         }
 
         stage('Documentation') {
             steps {
-                echo ' Génération de la documentation JavaDoc...'
+                echo 'Generating JavaDoc documentation...'
                 bat 'mvn site'
             }
         }
 
         stage('Packaging') {
             steps {
-                echo ' Packaging du projet...'
+                echo 'Packaging the project...'
                 bat 'mvn package'
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
 
-        stage('Déploiement') {
+        stage('Deployment') {
             parallel {
                 stage('Nexus') {
                     steps {
-                        echo ' Déploiement sur Nexus...'
+                        echo 'Deploying to Nexus...'
                         bat 'mvn deploy'
                     }
                 }
-                // Docker (optionnel, décommenter si nécessaire)
+                // Docker (optional, uncomment if needed)
                 /*
                 stage('Docker Image') {
                     steps {
@@ -106,7 +92,7 @@ pipeline {
 
         stage('End') {
             steps {
-                echo 'Pipeline terminé avec succès !'
+                echo 'Pipeline completed successfully!'
             }
         }
     }
@@ -116,36 +102,36 @@ pipeline {
             cleanWs()
         }
         success {
-            echo '🎉 Build réussi ! Envoi du rapport HTML.'
+            echo 'Build succeeded! Sending HTML report.'
             publishHTML(target: [
-                reportName: 'Documentation du projet',
+                reportName: 'Project Documentation',
                 reportDir: 'target/site',
                 reportFiles: 'index.html'
             ])
             emailext (
                 to: "${env.RECIPIENT}",
-                subject: "✅ Succès Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """Le pipeline s'est terminé avec succès.
+                subject: "SUCCESS Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """The pipeline completed successfully.
 
-- 📁 Job : ${env.JOB_NAME}
-- 🔢 Build : #${env.BUILD_NUMBER}
-- 🔗 URL : ${env.BUILD_URL}
+- Job : ${env.JOB_NAME}
+- Build : #${env.BUILD_NUMBER}
+- URL : ${env.BUILD_URL}
 """
             )
         }
         failure {
-            echo '❌ Build échoué. Envoi du mail de notification.'
+            echo 'Build failed. Sending failure notification email.'
             emailext (
                 to: "${env.RECIPIENT}",
-                subject: "❌ ÉCHEC Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """Le pipeline a échoué.
+                subject: "FAILURE Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """The pipeline has failed.
 
-- 📁 Job : ${env.JOB_NAME}
-- 🔢 Build : #${env.BUILD_NUMBER}
-- 🧾 Étape : ${currentBuild.currentResult}
-- 🔗 URL : ${env.BUILD_URL}
+- Job : ${env.JOB_NAME}
+- Build : #${env.BUILD_NUMBER}
+- Status : ${currentBuild.currentResult}
+- URL : ${env.BUILD_URL}
 
-Veuillez vérifier les logs pour plus d'informations.
+Please check the logs for more details.
 """,
                 attachLog: true
             )
