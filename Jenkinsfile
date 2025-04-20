@@ -5,8 +5,7 @@ pipeline {
         RECIPIENT = 'elharidioumaima@gmail.com'
     }
 
-   
-
+    stages {
         stage('Build') {
             steps {
                 echo 'Building the project...'
