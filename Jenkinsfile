@@ -1,77 +1,67 @@
 pipeline {
-    agent none // No default agent, we will specify agents for each stage
+    agent none
 
     stages {
-        // Build Stage
         stage('Build') {
-            agent { label 'test-node' } // Run on the test-node
+            agent { label 'test-node' }
             steps {
                 echo 'Building the project...'
-                bat 'mvn clean install' // Replace with 'sh' for Linux agents
+                bat 'mvn clean install'
             }
         }
 
-        // Unit Test Stage
         stage('Unit Tests') {
-            agent { label 'test-node' } // Run on the test-node
+            agent { label 'test-node' }
             steps {
                 echo 'Running unit tests...'
-                bat 'mvn test' // Replace with 'sh' for Linux agents
+                bat 'mvn test'
             }
         }
 
-        // Code Coverage Stage
         stage('Code Coverage') {
-            agent { label 'coverage-node' } // Run on the coverage-node
+            agent { label 'coverage-node' }
             steps {
                 echo 'Running code coverage...'
-                bat 'mvn jacoco:report' // Replace with 'sh' for Linux agents
+                bat 'mvn jacoco:report'
             }
         }
 
-        // Documentation Generation Stage
         stage('Generate Documentation') {
-            agent { label 'doc-node' } // Run on the doc-node
+            agent { label 'doc-node' }
             steps {
                 echo 'Generating project documentation...'
-                bat 'mvn site' // Replace with 'sh' for Linux agents
+                bat 'mvn site'
             }
         }
 
-        // Packaging Stage
         stage('Package') {
-            agent { label 'test-node' } // Run on the test-node
+            agent { label 'test-node' }
             steps {
                 echo 'Packaging the project...'
-                bat 'mvn package' // Replace with 'sh' for Linux agents
+                bat 'mvn package'
             }
         }
     }
 
     post {
-        // If the build is successful, publish the HTML report
         success {
             echo 'Build succeeded!'
             publishHTML(target: [
                 reportName: 'Project Documentation',
-                reportDir: 'target/site', // Path to the generated site documentation
-                reportFiles: 'index.html' // Main HTML file for the site
+                reportDir: 'target/site',
+                reportFiles: 'index.html'
             ])
         }
 
-        // If the build fails, send an email notification
-        post {
-    failure {
-        echo 'Build failed!'
-        node {
-            emailext(
-                subject: "Jenkins Build Failure: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                body: "Build failed. Check the build logs for details.",
-                to: 'elharidioumaima@gmail.com'
-            )
+        failure {
+            echo 'Build failed!'
+            node('test-node') {
+                emailext(
+                    subject: "Jenkins Build Failure: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                    body: "Build failed. Check the build logs for details.",
+                    to: 'elharidioumaima@gmail.com'
+                )
+            }
         }
-    }
-}
-
     }
 }
