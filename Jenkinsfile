@@ -41,6 +41,18 @@ pipeline {
                 bat 'mvn package'
             }
         }
+
+        // 🔧 Debug stage to test email
+        stage('Force Email') {
+            agent { label 'test-node' }
+            steps {
+                emailext(
+                    subject: "Debug Email",
+                    body: "Just testing if this email sends from a stage!",
+                    to: 'elharidioumaima@gmail.com'
+                )
+            }
+        }
     }
 
     post {
