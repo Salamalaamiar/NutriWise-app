@@ -22,6 +22,7 @@ pipeline {
             parallel {
                 stage('JUnit') {
                     steps {
+                        bat 'mvn test'
                         echo 'JUnit unit tests executed'
                     }
                 }
